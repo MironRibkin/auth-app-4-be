@@ -92,7 +92,7 @@ exports.login = function (req, res) {
             res.send('Username or password incorrect');
         } else {
             // Generate an access token
-            const accessToken = jwt.sign({email: user[0].email, status: user[0].status, id: user[0].id}, accessTokenSecret);
+            const accessToken = jwt.sign({email: user.email, status: user.status, id: user.id}, accessTokenSecret);
             res.json({
                 token: accessToken
             });
