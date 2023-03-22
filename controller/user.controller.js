@@ -86,13 +86,14 @@ exports.findPaginated = function (req, res) {
 exports.login = function (req, res) {
     // Read username and password from request body
     const {email, password} = req.body;
+    console.log(req.body);
     // Filter user from the users array by username and password
     User.findByEmailAndPassword(email, password, function (err, user) {
-        if (err) {
+        if (err || user[0] === undefined) {
             res.send('Username or password incorrect');
         } else {
             // Generate an access token
-            const accessToken = jwt.sign({email: user.email, status: user.status, id: user.id}, accessTokenSecret);
+            const accessToken = jwt.sign({email: user[0].email, status: user[0].status, id: user[0].id}, accessTokenSecret);
             res.json({
                 token: accessToken
             });
